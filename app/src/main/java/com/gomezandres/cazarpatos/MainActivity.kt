@@ -1,10 +1,14 @@
 package com.gomezandres.cazarpatos
 
+import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -50,6 +54,34 @@ class MainActivity : AppCompatActivity() {
                 imageViewPato.setImageResource(R.drawable.duck)
                 moverPato()
             }, 500)
+        }
+    }
+    fun jugarOnline(){
+        var intentWeb = Intent()
+        intentWeb.action = Intent.ACTION_VIEW
+        intentWeb.data = Uri.parse("https://duckhuntjs.com/")
+        startActivity(intentWeb)
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.itemReiniciar -> {
+                reiniciarJuego()
+                true
+            }
+            R.id.itemJugarOnline -> {
+                jugarOnline()
+                true
+            }
+            R.id.itemRanking -> {
+                val intent = Intent(this, RankingActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
     private fun inicializarPantalla() {
